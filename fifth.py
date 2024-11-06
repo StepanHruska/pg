@@ -12,6 +12,8 @@ def read_header(file_name, header_length):
     Tato funkce načte binární soubor z cesty file_name,
     z něj přečte prvních header_length bytů a ty vrátí pomocí return
     """
+    with open (file_name, "rb") as soubor:
+        'xxx' == soubor.read(header_length)
     return b'xxx'
 
 
@@ -24,8 +26,12 @@ def is_jpeg(file_name):
     header = read_header(file_name, len(jpeg_header))
 
     # vyhodnoť zda je soubor jpeg
+    header = read_header(file_name, len(jpeg_header))
+    if len(header) == len(jpeg_header):
+        return True
+    else:
+        return False
 
-    return False
 
 
 def is_gif(file_name):
@@ -33,17 +39,27 @@ def is_gif(file_name):
     Funkce zkusí přečíst ze souboru hlavičku obrázku jpeg,
     tu srovná s definovanými hlavičkami v proměnných gif_header1 a gif_header2
     """
+    header = read_header(file_name, len(gif_header1))
     # vyhodnoť zda je soubor gif
-    return False
-
+    if header == gif_header1:
+        return True
+    elif header == gif_header2:
+        return True
+    else:
+        return False
+   
 
 def is_png(file_name):
     """
     Funkce zkusí přečíst ze souboru hlavičku obrázku jpeg,
     tu srovná s definovanou hlavičkou v proměnné png_header
     """
+    header = read_header(file_name, len(png_header))
+    if header == png_header:
+        return True
+    else:
+        return False
     # vyhodnoť zda je soubor png
-    return False
 
 
 def print_file_type(file_name):
@@ -62,6 +78,10 @@ def print_file_type(file_name):
 
 if __name__ == '__main__':
     # přidej try-except blok, odchyť obecnou vyjímku Exception a vypiš ji
-    file_name = sys.argv[1]
-    print_file_type(file_name)
-    fsdkfsdf
+    try:
+        file_name = sys.argv[1]
+        print_file_type(file_name)
+
+    except Exception as e:
+            print(f"Nastala chyba: {e}")
+    
