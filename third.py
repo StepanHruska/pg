@@ -1,3 +1,6 @@
+import time
+import math
+
 def je_prvocislo(cislo):
     """
     Funkce overi, zda zadane cislo je nebo neni prvocislo a vrati True nebo False
@@ -18,41 +21,30 @@ def je_prvocislo(cislo):
     Jak vidite v druhe polovine se dvojice opakuji, tzn. v tomto pripade staci overit delitelnost pouze do 6 (vcetne)
     """
     cislo = int(cislo)
-    if cislo == 2 or cislo == 3 or cislo == 5 or cislo == 7:
-        return cislo
-    elif cislo == 1 or cislo == 4:
-        return  False
-    elif cislo >  5 and cislo % 2 == 0 or cislo % 3 == 0 or cislo % 5 == 0 or cislo % 7 == 0: 
+    if cislo <= 1:
         return False
-    else:
-        return cislo
+    i = 0
+    #for delitel in range(2, round(cislo**0.5)):
+    for delitel in range(2, cislo):
+        if cislo % delitel == 0:
+            return False
+        i += 1
+    
+    return True
 
 def vrat_prvocisla(maximum):
-    #seznam = []
-    #maximum = int(cislo)
-    #i = 1
-    #i = int(i)
-    #while je_prvocislo(i) == True and maximum >= i:
-        #seznam.append(i)
-        #i += 1
-    #i = int(cislo)
-    #maximum = int(maximum)
-    #for i in range(1, maximum):
-        #while je_prvocislo(i) == True and i <= maximum:
-            #seznam.append(i)
-            #i += 1
-    #if je_prvocislo(i) == True and maximum >= i:
-        #seznam.append(i)
-    #else:
-        #while je_prvocislo(i) == False and maximum >= i:
-        #i += 1
+    """
+    Funkce spocita vsechna prvocisla v rozsahu 1 az maximum a vrati je jako seznam.
+    """
     maximum = int(maximum)
-    cisla = range(1, maximum)
-    prvocisla_list= list(filter(lambda x:je_prvocislo(x), cisla))
-    return prvocisla_list
+    results = []
+    for i in range(2, maximum + 1):
+        if je_prvocislo(i):
+            results.append(i)
+    return results
 
 if __name__ == "__main__":
     cislo = input("Zadej maximum: ")
+    print(je_prvocislo(cislo))
     prvocisla = vrat_prvocisla(cislo)
     print(prvocisla)
-    #print(je_prvocislo(10))
