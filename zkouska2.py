@@ -1,17 +1,19 @@
+# napiste funkci, ktera podle typu "+"", "-", "*", "/" provede operaci a vrati vysledek
+
 def operace(typ, a, b):
-    moperace = 0
+    matematicka_operace = None
     if typ == "+":
-        moperace = a + b
+        matematicka_operace = a + b
     elif typ == "-":
-        moperace = a - b
+        matematicka_operace = a - b
     elif typ == "*":
-        moperace = a * b
+        matematicka_operace = a * b
     elif typ == "/":
-        moperace = a / b
-    return moperace
+        matematicka_operace = a / b
+    return matematicka_operace
 
 if __name__ == "__main__":
-    operace("+", 1, 2)
-    operace("-", 2, 2)
-    operace("*", 3, 2)
-    operace("/", 6, 2)
+    operace("+", 1, 2)  # 3
+    operace("-", 2, 1)  # 1
+    operace("*", 0, 5)  # 0
+    operace("/", 4, 2)  # 2
