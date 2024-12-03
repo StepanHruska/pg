@@ -19,7 +19,7 @@ def bin_to_dec(binarni_cislo):
    #while i <= len(cislo):
     #if cislo[i] == "1":
      #  vysledek = vysledek + (2**int(i))
-    #else:
+    #else:bbbbvbh
     #   vysledek = vysledek
     #i + 1
 
