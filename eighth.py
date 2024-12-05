@@ -41,3 +41,5 @@ def test_bin_to_dec():
     assert bin_to_dec(101) == 5
     assert bin_to_dec("010101") == 21
     assert bin_to_dec(10000000) == 128
+
+print(bin_to_dec("00101010"))
