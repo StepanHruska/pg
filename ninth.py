@@ -1,5 +1,5 @@
 def dec_to_bin(cislo):
-    # funkce prevede cislo na binarni reprezentaci (cislo muze byt str i int!!!)
+    # funkce prevede cislo na binarni reprezentaci (cislo muze byt str i int!!!)h
     # 7 -> "111"
     # 5 -> "101"
     cislo = int(cislo)
