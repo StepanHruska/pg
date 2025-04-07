@@ -7,7 +7,7 @@ list
 def buildDeck():
     deck = []
     colours = ["Red", "Green", "Blue", "Yellow"]
-    values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "draw two", "skip", "reverse"]
+    values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "Draw two", "Skip", "Reverse"]
     wilds = ["Wild", "Draw four"]
     for colour in colours:
         for value in values:
@@ -33,7 +33,7 @@ def drawCards(numCards):
     return cardsDrawn
 
 def showHand(player, playerHand):
-    print("Player {}".format(player+1))
+    print("Player {}s Turn".format(player+1))
     print("Your hand")
     print("------------")
     y = 1
@@ -44,7 +44,6 @@ def showHand(player, playerHand):
 
 def canPlay(colour, value, playerHand):
     for card in playerHand:
-        splitCard = card.split("",1)
         if "Wild" in card:
             return True
         elif colour in card or value in card:
@@ -54,9 +53,9 @@ def canPlay(colour, value, playerHand):
 unoDeck = buildDeck()
 unoDeck = shuffleDeck(unoDeck)
 discards = []
-print(unoDeck)
 
 players = []
+colours = ["Red", "Green", "Blue", "Yellow"]
 numPlayers = int(input("How many players?"))
 while numPlayers<2 or numPlayers>4:
     numPlayers = int(input("please enter a number between 2 - 4. How many players?"))
@@ -68,8 +67,8 @@ print(players)
 playerTurn = 0
 playDirection = 1
 playing = True
-discards.append(unoDeck.pop[0])
-splitCard = discards[0].split("",1)
+discards.append(unoDeck.pop(0))
+splitCard = discards[0].split(" ",1)
 currentColour = splitCard[0]
 if currentColour != "Wild":
     cardValue = splitCard[1]
@@ -81,10 +80,43 @@ while playing:
     print("Card on top of the discard pile: {}".format(discards [-1]))
     if canPlay(currentColour, cardValue, players[playerTurn]):
         cardChosen = int(input("Which card do you want to play?"))
-        while not canPlay(currentColour, cardValue, [players[playerTurn[cardChosen-1]]]):
+        while not canPlay(currentColour, cardValue,[players[playerTurn][cardChosen-1]]):
             cardChosen = int(input("Not a valid card. Which card do you want to play?"))
-        discards.append(players[playerTurn.pop(cardChosen-1)])
+        print("You played {}".format(players[playerTurn][cardChosen-1]))
+        discards.append(players[playerTurn].pop(cardChosen-1))
+        
+        #check for special cards
+        splitCard = discards[-1].split(" ",1)
+        currentColour = splitCard[0]
+        if len(splitCard) == 1:
+            cardValue = "Any"
+        else:
+            cardValue = splitCard[1]
+        if currentColour == "Wild":
+            for x in range(len(colours)):
+                print("{} {}".format(x+1, colours[x]))
+            newColour = int(input("What colour would you like to choose?"))
+            while newColour < 1 or newColour > 4:
+                newColour = int(input("Invalid option. What colour would you like to choose?")) 
+            currentColour = colours[newColour-1]
+        if cardValue == "Reverse":
+            playDirection = playDirection * -1
+        elif cardValue == "Skip":
+            playerTurn += playDirection
+        elif cardValue == "Draw two":
+            players[playerTurn].extend(drawCards(2))
+        elif cardValue == "Draw four":
+            players[playerTurn].extend(drawCards(4))
+        print("")
     else:
         print("You cant play, you have to draw a card")
         players[playerTurn].extend(drawCards(1))
+
+    
+
+
     playerTurn += playDirection
+    if playerTurn == numPlayers:
+        playerTurn = 0
+    elif playerTurn < 0:
+        playerTurn = numPlayers-1
