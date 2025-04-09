@@ -40,6 +40,7 @@ def showHand(player, playerHand):
         print("{} {}".format(y,card))
         y += 1
     print("")
+
 #overi jestli hrac muze hrat, nebo ne
 def canPlay(colour, value, playerHand):
     for card in playerHand:
@@ -48,32 +49,40 @@ def canPlay(colour, value, playerHand):
         elif colour in card or value in card:
             return True
     return False
-#herni promenne
-unoDeck = buildDeck()
-unoDeck = shuffleDeck(unoDeck)
-discards = []
 
+#herni promenne
+
+discards = []
 players = []
 colours = ["Red", "Green", "Blue", "Yellow"]
 numPlayers = int(input("How many players?"))
-while numPlayers<2 or numPlayers>4:
-    numPlayers = int(input("please enter a number between 2 - 4. How many players?"))
-for player in range(numPlayers):
-    players.append(drawCards(5))
-
-print(players)
-
 playerTurn = 0
 playDirection = 1
 playing = True
+
+#zacatek hry - vygenerovani zamichaneho balicku
+unoDeck = buildDeck()
+unoDeck = shuffleDeck(unoDeck)
+
+#overi pocet hracu a kezdemu rozda 7 karet
+while numPlayers<2 or numPlayers>4:
+    numPlayers = int(input("please enter a number between 2 - 4. How many players?"))
+for player in range(numPlayers):
+    players.append(drawCards(7))
+print(players)
+
+#balicek pouzitych karet
 discards.append(unoDeck.pop(0))
 splitCard = discards[0].split(" ",1)
+
+#overeni Wild karty
 currentColour = splitCard[0]
 if currentColour != "Wild":
     cardValue = splitCard[1]
 else:
     cardValue = "Any"
 
+#prubeh hry
 while playing:
     showHand(playerTurn, players[playerTurn])
     print("Card on top of the discard pile: {}".format(discards [-1]))
@@ -116,14 +125,14 @@ while playing:
                     playerDraw = 0
                 elif playerDraw < 0:
                     playerDraw = numPlayers-1
-                players[playerDraw].extend(drawCards(2))
+                players[playerTurn].extend(drawCards(2))
             elif cardValue == "Draw four":
                 playerDraw = playerTurn + playDirection
                 if playerDraw == numPlayers:
                     playerDraw = 0
                 elif playerDraw < 0:
                     playerDraw = numPlayers-1
-                players[playerDraw].extend(drawCards(4))
+                players[playerTurn].extend(drawCards(4))
             print("")
     else:
         print("You cant play, you have to draw a card")
