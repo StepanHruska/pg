@@ -61,7 +61,7 @@ while numPlayers<2 or numPlayers>4:
 for player in range(numPlayers):
     players.append(drawCards(5))
 
-print(players)
+#print(players)
 
 playerTurn = 0
 playDirection = 1
